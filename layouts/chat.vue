@@ -48,6 +48,15 @@
       <v-toolbar-title>
         {{ user.room }}
       </v-toolbar-title>
+      <div v-if="typingUsers.length" class="chat-typing">
+        <p
+          v-for="(typingUser, index) in typingUsers"
+          :key="`typingUser-${index}`"
+          class="chat-typing-user"
+        >
+          {{ typingUser.name }} is typing...
+        </p>
+      </div>
     </v-app-bar>
     <v-main>
       <v-container fluid style="height: 100%;" class="chat__body">
@@ -58,7 +67,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "ChatLayout",
@@ -67,6 +76,7 @@ export default {
   }),
   computed: {
     ...mapState(["user", "users"]),
+    ...mapGetters(["typingUsers"]),
   },
   middleware: "auth",
   created() {
@@ -86,5 +96,21 @@ export default {
 .chat__body {
   background-image: url("/bg.png");
   background-repeat: repeat;
+}
+
+.chat-typing {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
+
+.chat-typing p {
+  padding-top: 2px;
+  margin: 0;
+}
+
+.chat-typing-user:not(first-child) {
+  margin-left: 15px;
 }
 </style>

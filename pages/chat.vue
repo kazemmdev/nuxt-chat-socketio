@@ -8,15 +8,6 @@
         :owner="message.id === user.id"
       />
     </div>
-    <div v-if="typingUsers.length" class="chat-typing">
-      <p
-        v-for="(typingUser, index) in typingUsers"
-        :key="`typingUser-${index}`"
-        class="chat-typing-user"
-      >
-        {{ typingUser.name }} is typing...
-      </p>
-    </div>
     <div class="chat-form">
       <ChatForm />
     </div>
@@ -24,7 +15,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 import Message from "@/components/Message";
 import ChatForm from "@/components/ChatForm";
 
@@ -37,7 +28,6 @@ export default {
   },
   computed: {
     ...mapState(["user", "messages", "users"]),
-    ...mapGetters(["typingUsers"]),
   },
   watch: {
     messages() {
@@ -88,16 +78,6 @@ export default {
   padding: 1rem;
   overflow-y: auto;
   color: #000;
-}
-
-.chat-typing {
-  position: absolute;
-  display: flex;
-  bottom: 50px;
-}
-
-.chat-typing-user:not(first-child) {
-  margin-left: 15px;
 }
 
 .chat-body {

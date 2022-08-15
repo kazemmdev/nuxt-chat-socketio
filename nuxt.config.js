@@ -1,5 +1,9 @@
 module.exports = {
   mode: "universal",
+  server: {
+    host: "0.0.0.0",
+    port: "3000",
+  },
   head: {
     titleTemplate: "%s - " + process.env.npm_package_name,
     title: process.env.npm_package_name || "",
@@ -14,23 +18,18 @@ module.exports = {
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   },
-
   css: [{ src: "~/assets/app.css", lang: "css" }],
-
   plugins: [
     { src: "~/plugins/filters.client.js" },
     { src: "~/plugins/socket.client.js" },
     { src: "~/plugins/vuetify.js" },
   ],
-
   buildModules: [],
-
   modules: ["@nuxtjs/pwa"],
-
   pwa: {
     manifest: {
-      name: "Nuxt.js PWA nuxt-chat-app",
-      short_name: "Nuxt.js PWA",
+      name: "Live Chat",
+      short_name: "Chat",
       start_url: "/",
       theme_color: "#424242",
       display: "standalone",
@@ -39,8 +38,9 @@ module.exports = {
       iconSrc: "./static/favicon.ico",
     },
   },
-
   build: {
-    extend(config, ctx) {},
+    extend(config, ctx) {
+      
+    },
   },
 };
