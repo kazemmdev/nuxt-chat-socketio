@@ -7,12 +7,12 @@
       <v-row no-gutters justify="space-between" class="msg" :class="{ owner }">
         <v-col>
           <span class="font-weight-bold">{{ message.name }}</span>
-          <p class="mb-0">
+          <p class="my-2">
             {{ message.text }}
           </p>
         </v-col>
         <v-col cols="auto">
-          <span class="msg__date ml-3">{{ message.time }}</span>
+          <span class="msg__date ml-3">{{ message.time | ago }}</span>
         </v-col>
       </v-row>
     </v-col>
@@ -54,16 +54,17 @@ export default {
 }
 
 .msg {
-  padding: 1rem;
-  width: 60%;
+  padding: 10px 14px;
+  width: 90%;
   margin: 0 1rem;
   box-shadow: 0 1px 0 0 rgba(50, 50, 50, 0.3);
   border-radius: 4px;
-  background: #1976d2;
+  background: #009688;
   color: #fff;
   position: relative;
   word-break: break-all;
   margin-bottom: 1rem;
+  max-width: 600px;
 
   &__date {
     text-decoration: underline;

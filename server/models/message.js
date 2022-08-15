@@ -3,10 +3,10 @@ class Message {
     this.name = name;
     this.text = text;
     this.id = id;
-    this.time = new Date().toString().slice(15, 24);
+    this.time = new Date();
   }
 }
 
 module.exports = () => {
-  return Message
-}
+  return Message;
+};
