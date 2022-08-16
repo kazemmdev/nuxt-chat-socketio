@@ -18,7 +18,7 @@ class UsersDB {
   removeUser(id) {
     this.users = this.users.filter((user) => user.id !== id);
   }
-  
+
   setTypingStatus(id, typingStatus) {
     const index = this.users.findIndex((user) => user.id === id);
     this.users[index].typingStatus = typingStatus;

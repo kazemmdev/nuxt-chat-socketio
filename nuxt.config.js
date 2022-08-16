@@ -1,5 +1,6 @@
 module.exports = {
-  mode: "universal",
+  ssr: false,
+  telemetry: false,
   server: {
     host: "0.0.0.0",
     port: "3000",
@@ -22,6 +23,7 @@ module.exports = {
   plugins: [
     { src: "~/plugins/filters.client.js" },
     { src: "~/plugins/socket.client.js" },
+    { src: "~/plugins/persistState.js" },
     { src: "~/plugins/vuetify.js" },
   ],
   buildModules: [],
@@ -39,8 +41,6 @@ module.exports = {
     },
   },
   build: {
-    extend(config, ctx) {
-      
-    },
+    extend(config, ctx) {},
   },
 };

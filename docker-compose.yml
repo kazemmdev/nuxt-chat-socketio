@@ -1,0 +1,35 @@
+version: '3.8'
+
+networks:
+  app-network:
+
+volumes:
+  app-data:
+
+services:
+  nginx:
+    image: nginx:1.21.6-alpine
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+      - .docker:/etc/nginx/conf.d
+    networks:
+      app-network:
+
+  site:
+    image: node:16-alpine
+    container_name: site
+    env_file: .env
+    working_dir: /app
+    tty: true
+    expose:
+      - "3000"
+    volumes:
+      - ./:/app
+    networks:
+      app-network:
+    command: npm run dev

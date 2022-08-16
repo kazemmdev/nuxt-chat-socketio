@@ -1,8 +1,8 @@
 {
-  "name": "nuxt-chat-app",
+  "name": "chat-app",
   "version": "1.0.0",
-  "description": "Simple chat on Nuxt.js",
-  "author": "Petr Borul",
+  "description": "Chat app with Socket.io and Nuxtjs",
+  "author": "Kazem Mirzaei",
   "private": false,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
@@ -15,13 +15,16 @@
     "@nuxtjs/pwa": "^3.0.0-beta.20",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
+    "js-cookie": "^3.0.1",
     "moment": "^2.29.4",
-    "nuxt": "^2.12.2",
+    "mongoose": "^6.5.2",
+    "nuxt": "^2.15.8",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "socket.io": "^2.4.0",
     "vue-socket.io": "^3.0.9",
-    "vuetify": "^2.6.9"
+    "vuetify": "^2.6.9",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@mdi/font": "^5.2.45",
