@@ -1,18 +1,21 @@
+const db = require("../db/service");
+
 class UsersDB {
   constructor() {
-    this.users = [];
+    this.users = db.index();
   }
 
   addUser(user) {
-    this.users = [...this.users, user];
+    db.create(user.id, user.name, user.room, user.typingStatus);
+    this.users = db.index();
   }
 
   getUser(id) {
-    return this.users.find((user) => user.id === id);
+    return db.get(id);
   }
 
   getUsersByRoom(room) {
-    return this.users.filter((user) => user.room === room);
+    return db.getByRoom(room);
   }
 
   removeUser(id) {
@@ -20,8 +23,8 @@ class UsersDB {
   }
 
   setTypingStatus(id, typingStatus) {
-    const index = this.users.findIndex((user) => user.id === id);
-    this.users[index].typingStatus = typingStatus;
+    db.update(id, typingStatus);
+    this.users = db.index();
   }
 }
 

@@ -8,8 +8,8 @@ module.exports = function (app) {
   const io = socketio(server);
 
   io.on("connection", (socket) => {
-    socket.on("createUser", (user) => {
-      usersDB.addUser({
+    socket.on("createUser", async (user) => {
+      await usersDB.addUser({
         ...user,
         id: socket.id,
       });
@@ -17,9 +17,9 @@ module.exports = function (app) {
       return { id: socket.id };
     });
 
-    socket.on("joinRoom", ({ name, room }) => {
+    socket.on("joinRoom", async ({ name, room }) => {
       socket.join(room);
-      io.to(room).emit("updateUsers", usersDB.getUsersByRoom(room));
+      io.to(room).emit("updateUsers", await usersDB.getUsersByRoom(room));
       socket.emit("newMessage", new Message("admin", `Hello, ${name}`));
       socket.broadcast
         .to(room)
@@ -29,29 +29,29 @@ module.exports = function (app) {
         );
     });
 
-    socket.on("createMessage", ({ id, msg }) => {
-      const user = usersDB.getUser(id);
+    socket.on("createMessage", async ({ id, msg }) => {
+      const user = await usersDB.getUser(id);
       if (user) {
         io.to(user.room).emit("newMessage", new Message(user.name, msg, id));
       }
     });
 
-    socket.on("setTypingStatus", ({ room, typingStatus, id }) => {
-      usersDB.setTypingStatus(id, typingStatus);
-      io.to(room).emit("updateUsers", usersDB.getUsersByRoom(room));
+    socket.on("setTypingStatus", async ({ room, typingStatus, id }) => {
+      await usersDB.setTypingStatus(id, typingStatus);
+      io.to(room).emit("updateUsers", await usersDB.getUsersByRoom(room));
     });
 
     const exitEvents = ["leftChat", "disconnect"];
 
     exitEvents.forEach((event) => {
-      socket.on(event, () => {
+      socket.on(event, async () => {
         const id = socket.id;
-        const user = usersDB.getUser(id);
+        const user = await usersDB.getUser(id);
         if (!user) return;
         const { room, name } = user;
         usersDB.removeUser(id);
         socket.leave(room);
-        io.to(room).emit("updateUsers", usersDB.getUsersByRoom(room));
+        io.to(room).emit("updateUsers", await usersDB.getUsersByRoom(room));
         io.to(room).emit(
           "newMessage",
           new Message("admin", `User ${name} left chat`)
